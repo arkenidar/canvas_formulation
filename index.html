@@ -19,7 +19,11 @@ document.querySelectorAll('.formulations').forEach(function(element){
 		function handler(){
 			fetch(url)
 			.then(response=>response.text())
-			.then(text=> document.getElementById('code_input').value=text )
+			.then(text=>{
+				document.getElementById('code_input').value=text
+				draw_code()
+			})
+
 			return false
 		}
 	})
