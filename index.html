@@ -6,6 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
+<div class=formulations><a>formulation-1</a> <a>formulation-2</a></div>
+<script>
+document.querySelectorAll('.formulations').forEach(function(element){
+	element.querySelectorAll('a').forEach(function(link){
+		
+		var url='formulations/'+link.innerText+'.js'
+
+		link.href=url
+		link.onclick=handler
+
+		function handler(){
+			fetch(url)
+			.then(response=>response.text())
+			.then(text=> document.getElementById('code_input').value=text )
+			return false
+		}
+	})
+})
+</script>
+
 <a href="https://www.desmos.com/calculator/9fblwajct5">https://www.desmos.com/calculator/9fblwajct5</a> <br>
 
 <canvas id="canvas1" width="300" height="300"></canvas>
