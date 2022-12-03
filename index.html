@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<title>input code to canvas2d</title>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<a href="https://www.desmos.com/calculator/9fblwajct5">https://www.desmos.com/calculator/9fblwajct5</a> <br>
+
+<canvas id="canvas1" width="300" height="300"></canvas>
+
+<textarea id="code_input" oninput="draw_code()" cols="100" rows="15">
+	
+(x,y)=>{
+	var diagonal = x==y
+	var circle = x**2 + y**2 <= 40**2
+	var square = Math.max(Math.abs(x),Math.abs(y))<=100
+	return square && !circle
+}
+
+</textarea>
+
+<script>
+draw_code()
+function draw_code(){
+	var canvas = document.getElementById('canvas1')
+	var context = canvas.getContext('2d')
+
+	context.clearRect(0, 0, canvas.width, canvas.height)
+
+	// axes
+	condition_draw( (x,y)=>{ return x==0 } )
+	condition_draw( (x,y)=>{ return y==0 } )
+
+	// input
+	var condition = eval(code_input.value)
+	condition_draw( condition )
+
+
+	function condition_draw(condition){
+		for(var xi=-150; xi<=150; xi++)
+			for(var yi=-150; yi<=150; yi++){
+
+				var xd = xi + 150
+				var yd = -yi + 150
+
+				if( condition(xi,yi) )
+					context.fillRect(xd, yd, 1, 1)
+			}
+	}
+}
+</script>
