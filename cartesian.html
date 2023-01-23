@@ -1,0 +1,39 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>cartesian equations</title>
+<input id="equation" placeholder="2D Cartesian equation"><button onclick="draw(document.getElementById('equation').value)">draw</button>
+<br>
+<button onclick="draw('x**2+y**2<1e5')">circle</button>
+<button onclick="draw('y=3*x')">line</button>
+<button onclick="draw('y=100*sin(x/100)')">sinusoid</button>
+<button onclick="draw('eq(y,100*sin(x/100))||!(x**2+y**2<1e5)')">constructive</button>
+<br>
+<canvas id="cartesian" width="1000" height="1000" style="width: 100px; height:100px;">
+<script>
+function draw(equation){
+	// editable equation
+	document.getElementById('equation').value=equation
+	// drawable canvas init
+	var c = document.getElementById('cartesian')
+	var ctx = c.getContext('2d')
+	// clear
+	ctx.fillStyle='black'
+	ctx.fillRect(0,0,1000,1000)
+	// draw valid points
+	ctx.fillStyle='white'
+	for(var x2=0; x2<=1000; x2++)
+		for(var y2=0; y2<=1000; y2++){
+			var x = x2-500
+			var y = -(y2-500)
+			const {PI,sin,cos,abs}=Math
+			if(equation.indexOf('=')!=-1){
+				var [first,second]=equation.split('=')
+				equation='eq('+first+','+second+')'
+			}
+			if(eval(equation)==true)
+				ctx.fillRect(x2,y2,1,1)
+			function eq(first,second){return abs(first-second)<10}
+		}
+}
+</script>
