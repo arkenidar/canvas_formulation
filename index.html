@@ -5,30 +5,41 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+<hr>
+<ul>
+	<li><a href="https://github.com/arkenidar/canvas_formulation">
+			https://github.com/arkenidar/canvas_formulation</a>
+	</li>
+	<li><a href="https://arkenidar.github.io/canvas_formulation/">
+			https://arkenidar.github.io/canvas_formulation/</a>
+	</li>
+</ul>
+<hr>
+
 <a href="cartesian.html">cartesian.html : a previous prototype of this idea variation</a><br><br>
 
 <div class=formulations><a>formulation-1</a> <a>formulation-2</a></div>
 <script>
-document.querySelectorAll('.formulations').forEach(function(element){
-	element.querySelectorAll('a').forEach(function(link){
-		
-		var url='formulations/'+link.innerText+'.js'
+	document.querySelectorAll('.formulations').forEach(function (element) {
+		element.querySelectorAll('a').forEach(function (link) {
 
-		link.href=url
-		link.onclick=handler
+			var url = 'formulations/' + link.innerText + '.js'
 
-		function handler(){
-			fetch(url)
-			.then(response=>response.text())
-			.then(text=>{
-				document.getElementById('code_input').value=text
-				draw_code()
-			})
+			link.href = url
+			link.onclick = handler
 
-			return false
-		}
+			function handler() {
+				fetch(url)
+					.then(response => response.text())
+					.then(text => {
+						document.getElementById('code_input').value = text
+						draw_code()
+					})
+
+				return false
+			}
+		})
 	})
-})
 </script>
 
 <br>
@@ -70,32 +81,32 @@ return rectangle && !ellipse && !diagonal
 </textarea>
 
 <script>
-draw_code()
-function draw_code(){
-	var canvas = document.getElementById('canvas1')
-	var context = canvas.getContext('2d')
+	draw_code()
+	function draw_code() {
+		var canvas = document.getElementById('canvas1')
+		var context = canvas.getContext('2d')
 
-	context.clearRect(0, 0, canvas.width, canvas.height)
+		context.clearRect(0, 0, canvas.width, canvas.height)
 
-	// axes
-	condition_draw( (x,y)=>{ return x==0 } )
-	condition_draw( (x,y)=>{ return y==0 } )
+		// axes
+		condition_draw((x, y) => { return x == 0 })
+		condition_draw((x, y) => { return y == 0 })
 
-	// input
-	var condition = eval(code_input.value)
-	condition_draw( condition )
+		// input
+		var condition = eval(code_input.value)
+		condition_draw(condition)
 
 
-	function condition_draw(condition){
-		for(var xi=-150; xi<=150; xi++)
-			for(var yi=-150; yi<=150; yi++){
+		function condition_draw(condition) {
+			for (var xi = -150; xi <= 150; xi++)
+				for (var yi = -150; yi <= 150; yi++) {
 
-				var xd = xi + 150
-				var yd = -yi + 150
+					var xd = xi + 150
+					var yd = -yi + 150
 
-				if( condition(xi,yi) )
-					context.fillRect(xd, yd, 1, 1)
-			}
+					if (condition(xi, yi))
+						context.fillRect(xd, yd, 1, 1)
+				}
+		}
 	}
-}
 </script>
